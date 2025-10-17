@@ -3,7 +3,7 @@
 [![Works on my machine](https://img.shields.io/badge/works%20on-my%20machine-brightgreen)](https://img.shields.io/badge/works%20on-my%20machine-brightgreen)
 [![Bugs](https://img.shields.io/badge/Bugs-Yes-red)](https://img.shields.io/badge/Bugs-Yes-red)
 [![Code Quality](https://img.shields.io/badge/Code%20Quality-Questionable-yellow)](https://img.shields.io/badge/Code%20Quality-Questionable-yellow)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License: WTFPL](https://img.shields.io/badge/License-WTFPL-blue.svg)](https://www.wtfpl.net/)
 
 The one-stop solution you never knew you needed, and frankly, might be better off without.
 
@@ -33,7 +33,7 @@ Getting this masterpiece up and running is a piece of cake. If you can't follow 
 1.  Sell your soul to the open-source gods.
 2.  Clone the repo.
     ```sh
-    git clone [https://github.com/ztrohub/asiacust.git](https://github.com/ztrohub/asiacust.git)
+    git clone [https://github.com/Ztrohub/asiacust.git](https://github.com/Ztrohub/asiacust.git)
     ```
 3.  Install dependencies (and pray it doesn't break).
     ```sh
