@@ -1,24 +1,35 @@
-import express from 'express';
 import dotenv from 'dotenv';
-import cors from 'cors';
-import mainRoutes from './routes/index.js';
 
 dotenv.config();
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+import http from 'node:http';
+import app from './app.js';
+import { connectDB } from './config/db.js';
 
-// App configuration
-app.use(express.json());
-app.use(cors());
+const PORT = process.env.PORT || 5000;
 
-// Auto-load routes with versioning
-app.use('/api', mainRoutes);
+const start = async () => {
+	// connect to database
+	await connectDB();
 
-app.get('/', (req, res) => {
-  res.send('Hello, Asia Cust Server!');
-});
+	// set port
+	app.set('port', PORT);
 
-app.listen(PORT, () => {
-    console.log(`✅ Server is running on http://localhost:${PORT}`);
+	// create server
+	const server = http.createServer(app);
+
+	// start listening
+	server.listen(PORT, () => {
+		console.log(`🚀 Server is running on http://localhost:${PORT}`);
+	});
+
+	server.on('error', (error: NodeJS.ErrnoException) => {
+		console.error('❌ Server error:', error);
+		process.exit(1);
+	});
+};
+
+await start().catch((error) => {
+	console.error('❌ Failed to start server:', error);
+	process.exit(1);
 });
