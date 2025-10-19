@@ -1,6 +1,6 @@
 import cors from 'cors';
-import express, { type Request, type Response } from 'express';
-import createHttpError, { type HttpError } from 'http-errors';
+import express from 'express';
+import { errorsHandler, notFoundHandler } from './handlers/errors.handler.js';
 import mainRoutes from './routes/index.js';
 
 const app = express();
@@ -17,18 +17,9 @@ app.get('/', (_req, res) => {
 });
 
 // catch 404
-app.use((_req, _res, next) => {
-	next(createHttpError(404));
-});
+app.use(notFoundHandler);
 
 // global error handler
-app.use((err: HttpError, _req: Request, res: Response) => {
-	res.status(err.status || 500);
-	res.json({
-		error: {
-			message: err.message
-		}
-	});
-});
+app.use(errorsHandler);
 
 export default app;

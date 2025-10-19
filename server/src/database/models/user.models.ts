@@ -1,13 +1,28 @@
-import mongoose from 'mongoose';
+import { type IUser, UserRole } from '@shared/types/user.js';
+import mongoose, { model } from 'mongoose';
+import MongooseDelete, {
+	type SoftDeleteDocument,
+	type SoftDeleteModel
+} from 'mongoose-delete';
 
 const userSchema = new mongoose.Schema(
 	{
 		username: { type: String, required: true, unique: true },
-		email: { type: String, required: true, unique: true },
-		password: { type: String, required: true },
-		createdAt: { type: Date, default: Date.now }
+		firebaseUid: { type: String, required: true, unique: true },
+		role: {
+			type: String,
+			enum: UserRole,
+			required: true
+		}
 	},
 	{ timestamps: true }
 );
 
-export const User = mongoose.model('User', userSchema);
+userSchema.plugin(MongooseDelete, { deletedBy: true, overrideMethods: 'all' });
+
+export interface IUserDocument extends Omit<IUser, '_id'>, SoftDeleteDocument {}
+
+export const User = model<IUserDocument, SoftDeleteModel<IUserDocument>>(
+	'User',
+	userSchema
+);
