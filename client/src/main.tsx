@@ -6,13 +6,13 @@ import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from 'sonner'
 import router from './router'
 import { AuthProvider } from './contexts/AuthContext'
-import { NetworkLisener } from './components/network-listener'
+import { NetworkListener } from './components/network-listener'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
       <AuthProvider>
-        <NetworkLisener />
+        <NetworkListener />
         <RouterProvider router={router} />
         <Toaster />
       </AuthProvider>

@@ -1,6 +1,6 @@
 import { useNetworkStatus } from "@/hooks/network-status";
 
-export function NetworkLisener() {
+export function NetworkListener() {
     useNetworkStatus()
     return null
 }
