@@ -2,10 +2,10 @@ export interface IUser {
     _id: string;
     username: string;
     firebaseUid: string;
-    role: UserRole;
+    role: USER_ROLE;
 }
 
-export enum UserRole {
+export enum USER_ROLE {
     ADMIN = 'admin',
     TEKNISI= 'teknisi',
     HELPER= 'helper'

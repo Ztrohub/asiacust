@@ -1,4 +1,4 @@
-import { UserRole } from '@shared/types/user.js';
+import { USER_ROLE } from '@shared/types/user.js';
 import express from 'express';
 import createHttpError from 'http-errors';
 import admin from 'src/config/firebase.js';
@@ -19,8 +19,8 @@ const registerSchema = z.object({
 			'Username hanya boleh mengandung huruf, angka, dan underscore'
 		),
 	password: z.string().min(6, 'Password harus memiliki minimal 6 karakter'),
-	role: z.enum(UserRole, {
-		message: `Role harus salah satu dari: ${Object.values(UserRole).join(', ')}`
+	role: z.enum(USER_ROLE, {
+		message: `Role harus salah satu dari: ${Object.values(USER_ROLE).join(', ')}`
 	})
 });
 

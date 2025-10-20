@@ -1,4 +1,4 @@
-import { type IUser, UserRole } from '@shared/types/user.js';
+import { type IUser, USER_ROLE } from '@shared/types/user.js';
 import mongoose, { model } from 'mongoose';
 import MongooseDelete, {
 	type SoftDeleteDocument,
@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
 		firebaseUid: { type: String, required: true, unique: true },
 		role: {
 			type: String,
-			enum: UserRole,
+			enum: USER_ROLE,
 			required: true
 		}
 	},
