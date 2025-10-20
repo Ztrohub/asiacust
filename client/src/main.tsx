@@ -7,6 +7,9 @@ import { Toaster } from 'sonner'
 import router from './router'
 import { AuthProvider } from './contexts/AuthContext'
 import { NetworkListener } from './components/network-listener'
+import { initGlobalErrorHandler } from './hooks/error-handler'
+
+initGlobalErrorHandler()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
