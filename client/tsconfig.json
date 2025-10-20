@@ -17,7 +17,8 @@
     /* Alias */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/shared/*": ["../shared/*"]
     },
 
     /* Linting */
@@ -26,6 +27,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "tailwind.config.js"],
+  "include": ["src", "tailwind.config.js", "../shared"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

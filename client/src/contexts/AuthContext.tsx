@@ -1,12 +1,13 @@
+import { handleError } from "@/hooks/error-handler";
 import { auth } from "@/services/firebase";
+import { USER_ROLE } from "@/shared/types/user";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
 interface AuthContextType {
     user: User | null;
     loading: boolean;
-    //TODO: use role from shared/types/user.ts
-    role: string | null;
+    role: USER_ROLE | null;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -17,7 +18,7 @@ const AuthContext = createContext<AuthContextType>({
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
-    const [role, setRole] = useState<string | null>(null);
+    const [role, setRole] = useState<USER_ROLE | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -25,8 +26,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             if (user) {
                 const token = await user.getIdTokenResult(true);
                 const userRole = token.claims.role as string | undefined;
+
+                if (!userRole || !Object.values(USER_ROLE).includes(userRole as USER_ROLE)){
+                    return handleError(
+                        new Error("Role user is not valid!")
+                    )
+                }
+
                 setUser(user);
-                setRole(userRole || null);
+                setRole(userRole as USER_ROLE || null);
             } else {
                 setUser(null);
                 setRole(null);
