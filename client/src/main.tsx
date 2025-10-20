@@ -5,14 +5,15 @@ import '@/index.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from 'sonner'
 import router from './router'
+import { AuthProvider } from './contexts/AuthContext'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
-      {/* <AuthProvider> */}
+      <AuthProvider>
         <RouterProvider router={router} />
         <Toaster />
-      {/* </AuthProvider> */}
+      </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>
 )
