@@ -15,9 +15,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
       <AuthProvider>
-        <NetworkListener />
         <RouterProvider router={router} />
         <Toaster />
+        <NetworkListener />
       </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>

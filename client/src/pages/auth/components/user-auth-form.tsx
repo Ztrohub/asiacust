@@ -15,22 +15,21 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/custom/button'
 import { PasswordInput } from '@/components/custom/password-input'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '@/services/firebase'
+import { handleError } from '@/hooks/error-handler'
 
 interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {}
 
 const formSchema = z.object({
-  email: z
+  username: z
     .string()
-    .min(1, { message: 'Please enter your email' })
-    .email({ message: 'Invalid email address' }),
+    .min(1, { message: 'Username wajib diisi!' }),
   password: z
     .string()
     .min(1, {
-      message: 'Please enter your password',
+      message: 'Password wajib diisi!',
     })
-    .min(7, {
-      message: 'Password must be at least 7 characters long',
-    }),
 })
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
@@ -39,18 +38,25 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true)
-    console.log(data)
+    const email = `${data.username}@asia.lokal`
 
-    setTimeout(() => {
+    try {
+      await signInWithEmailAndPassword(auth, email, data.password)
+    } catch (err) {
+      if (err instanceof Error) {
+        handleError(err, err.message)
+      } else {
+        handleError(new Error('Error on sign in process'))
+      }
       setIsLoading(false)
-    }, 3000)
+    }
   }
 
   return (
@@ -60,12 +66,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           <div className='grid gap-2'>
             <FormField
               control={form.control}
-              name='email'
+              name='username'
               render={({ field }) => (
                 <FormItem className='space-y-1'>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder='name@example.com' {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -78,12 +84,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 <FormItem className='space-y-1'>
                   <div className='flex items-center justify-between'>
                     <FormLabel>Password</FormLabel>
-                    <Link
+                    {/* <Link
                       to='/forgot-password'
                       className='text-sm font-medium text-muted-foreground hover:opacity-75'
                     >
                       Forgot password?
-                    </Link>
+                    </Link> */}
                   </div>
                   <FormControl>
                     <PasswordInput placeholder='********' {...field} />

@@ -1,14 +1,12 @@
 import { useAuth } from "@/contexts/AuthContext";
-import { Navigate, useLocation } from "react-router-dom";
-import type { JSX } from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { USER_ROLE } from "@/shared/types/user";
 
 interface Props {
-    children: JSX.Element;
-    allowedRoles?: string[];
+    allowedRoles: string[]
 }
 
-export default function ProtectedRoute({ children, allowedRoles }: Props) {
+export default function ProtectedRoute({ allowedRoles }: Props) {
     const { user, loading, role } = useAuth();
     const location = useLocation();
 
@@ -25,5 +23,5 @@ export default function ProtectedRoute({ children, allowedRoles }: Props) {
         if (role === USER_ROLE.TEKNISI || role === USER_ROLE.HELPER) return <Navigate to="/worker" replace />
     }
 
-    return children;
+    return <Outlet />;
 }

@@ -23,24 +23,33 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const token = await user.getIdTokenResult(true);
-                const userRole = token.claims.role as string | undefined;
+            try {
+                if (user) {
+                    const token = await user.getIdTokenResult(true);
+                    const userRole = token.claims.role as string | undefined;
 
-                if (!userRole || !Object.values(USER_ROLE).includes(userRole as USER_ROLE)){
-                    return handleError(
-                        new Error("Role user is not valid!")
-                    )
+                    if (!userRole || !Object.values(USER_ROLE).includes(userRole as USER_ROLE)){
+                        return handleError(
+                            new Error("Role user is not valid!")
+                        )
+                    }
+
+                    console.log(userRole)
+
+                    setUser(user);
+                    setRole(userRole as USER_ROLE || null);
+                } else {
+                    setUser(null);
+                    setRole(null);
                 }
-
-                setUser(user);
-                setRole(userRole as USER_ROLE || null);
-            } else {
-                setUser(null);
-                setRole(null);
+            } catch (error) {
+                handleError(error)
+                setUser(null)
+                setRole(null)
+            } finally {
+                setLoading(false);
             }
 
-            setLoading(false);
         })
 
         return () => unsubscribe();
