@@ -34,8 +34,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                         )
                     }
 
-                    console.log(userRole)
-
                     setUser(user);
                     setRole(userRole as USER_ROLE || null);
                 } else {

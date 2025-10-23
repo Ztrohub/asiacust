@@ -18,7 +18,7 @@ export default function ProtectedRoute({ allowedRoles }: Props) {
         return <Navigate to="/sign-in" state={{ from: location }} replace />;
     }
 
-    if (allowedRoles && !allowedRoles.includes(role || "")) {
+    if (allowedRoles && allowedRoles.length > 0 && !allowedRoles.includes(role || "")) {
         if (role === USER_ROLE.ADMIN) return <Navigate to="/admin" replace />
         if (role === USER_ROLE.TEKNISI || role === USER_ROLE.HELPER) return <Navigate to="/worker" replace />
     }

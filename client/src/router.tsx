@@ -7,16 +7,26 @@ const router = createBrowserRouter([
     {
         path: '/sign-in',
         element: <PublicRoute />,
-        lazy: async () => ({
-            Component: (await import('./pages/auth/sign-in')).default,
-        }),
+        children : [
+            {
+                index: true,
+                lazy: async () => ({
+                    Component: (await import('./pages/auth/sign-in')).default,
+                }),
+            }
+        ]
     },
     {
         path: '/sign-out',
         element: <ProtectedRoute allowedRoles={[]}/>,
-        lazy: async () => ({
-            Component: (await import('./pages/auth/sign-out')).default,
-        })
+        children: [
+            {
+                index: true,
+                lazy: async () => ({
+                    Component: (await import('./pages/auth/sign-out')).default,
+                })
+            }
+        ]
     },
     {
         path: '/admin',
