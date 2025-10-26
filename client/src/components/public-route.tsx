@@ -1,6 +1,7 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { USER_ROLE } from "@/shared/types/user";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { LoadingPage } from "./custom/loading-page";
 
 export default function PublicRoute() {
     const { user, role, loading } = useAuth()
@@ -10,12 +11,12 @@ export default function PublicRoute() {
     const from = location.state?.from?.pathname;
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <LoadingPage />;
     }
 
     if (user) {
 
-        if (from) {
+        if (from && from !== '/sign-out') {
             return <Navigate to={from} replace />
         }
 

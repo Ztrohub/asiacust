@@ -45,10 +45,10 @@ export default function SignIn() {
         <div className='lg:p-8'>
           <div className='mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[350px]'>
             <div className='flex flex-col space-y-2 text-left'>
-              <h1 className='text-2xl font-semibold tracking-tight'>Login</h1>
+              <h1 className='text-2xl font-semibold tracking-tight'>Sign In</h1>
               <p className='text-sm text-muted-foreground'>
                 Masukkan user dan password anda <br />
-                untuk melakukan login
+                untuk melakukan sign in
               </p>
             </div>
             <UserAuthForm />

@@ -1,6 +1,8 @@
 import { useAuth } from "@/contexts/AuthContext";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { USER_ROLE } from "@/shared/types/user";
+import { LoadingPage } from "./custom/loading-page";
+import AppShell from "./app-shell";
 
 interface Props {
     allowedRoles: string[]
@@ -11,7 +13,7 @@ export default function ProtectedRoute({ allowedRoles }: Props) {
     const location = useLocation();
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <LoadingPage />;
     }
 
     if (!user) {
@@ -23,5 +25,5 @@ export default function ProtectedRoute({ allowedRoles }: Props) {
         if (role === USER_ROLE.TEKNISI || role === USER_ROLE.HELPER) return <Navigate to="/worker" replace />
     }
 
-    return <Outlet />;
+    return <AppShell />;
 }
