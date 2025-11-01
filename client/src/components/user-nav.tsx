@@ -56,9 +56,7 @@ export function UserNav() {
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator /> */}
-        <DropdownMenuItem>
-            Settings
-        </DropdownMenuItem>
+        {/* <DropdownMenuItem> */}
         <DropdownMenuItem asChild>
             <Link to='/sign-out'>Sign Out</Link>
         </DropdownMenuItem>

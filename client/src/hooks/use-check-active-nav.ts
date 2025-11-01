@@ -12,6 +12,9 @@ export default function useCheckActiveNav() {
 
     if (nav === '/') return pathname === '/'
 
+    if (nav === '/admin') return pathname === '/admin'
+    if (nav === '/worker') return pathname === '/worker'
+
     return pathname.startsWith(nav)
   }
 
