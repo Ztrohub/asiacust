@@ -1,13 +1,16 @@
 import { USER_ROLE } from '@shared/types/user.js';
 import express from 'express';
 import createHttpError from 'http-errors';
+import type { PaginateOptions } from 'mongoose';
 import admin from 'src/config/firebase.js';
 import { validateZod } from 'src/handlers/zod.handler.js';
+import { buildQuery } from 'src/utils/queryBuilder.js';
 import z from 'zod';
 import { User } from '../../database/models/user.models.js';
 
 const userRoutes = express.Router();
 
+// schema
 const registerSchema = z.object({
 	username: z
 		.string()
@@ -23,6 +26,9 @@ const registerSchema = z.object({
 		message: `Role harus salah satu dari: ${Object.values(USER_ROLE).join(', ')}`
 	})
 });
+
+// global search
+const USER_SEARCH_FIELDS = ['username', 'role', 'firebaseUid'];
 
 userRoutes.post('/', validateZod(registerSchema), async (req, res, next) => {
 	try {
@@ -56,6 +62,27 @@ userRoutes.post('/', validateZod(registerSchema), async (req, res, next) => {
 		return res.status(201).json({
 			message: 'User berhasil didaftarkan',
 			data: user
+		});
+	} catch (error) {
+		next(error);
+	}
+});
+
+userRoutes.get('/', async (req, res, next) => {
+	try {
+		const options: PaginateOptions = {
+			page: parseInt(req.query.page as string, 10) || 1,
+			limit: parseInt(req.query.limit as string, 10) || 10,
+			sort: (req.query.sort as string) || 'createdAt:desc'
+		};
+
+		const filterQuery = buildQuery(req.query, USER_SEARCH_FIELDS);
+
+		const users = await User.paginate(filterQuery, options);
+
+		return res.status(200).json({
+			message: 'Data berhasil didapatkan',
+			data: users
 		});
 	} catch (error) {
 		next(error);

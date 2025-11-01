@@ -6,7 +6,7 @@ import http from 'node:http';
 import app from './app.js';
 import { connectDB } from './config/db.js';
 
-const PORT = process.env.PORT || 5000;
+const PORT = parseInt(process.env.PORT || '5000', 10);
 
 const start = async () => {
 	// connect to database
@@ -19,7 +19,7 @@ const start = async () => {
 	const server = http.createServer(app);
 
 	// start listening
-	server.listen(PORT, () => {
+	server.listen(PORT, '0.0.0.0', () => {
 		console.log(`🚀 Server is running on http://localhost:${PORT}`);
 	});
 
