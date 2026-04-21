@@ -1,4 +1,4 @@
-import ReactLogo from '@/assets/react.svg'
+import AsiaLogo from '@/assets/asia.svg'
 import { UserAuthForm } from './components/user-auth-form'
 
 export default function SignIn() {
@@ -24,7 +24,7 @@ export default function SignIn() {
           </div>
 
           <img
-            src={ReactLogo}
+            src={AsiaLogo}
             className='relative m-auto'
             width={301}
             height={60}

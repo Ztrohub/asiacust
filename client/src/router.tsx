@@ -55,11 +55,17 @@ const router = createBrowserRouter([
                 })
             },
             {
+                path: 'customers',
+                lazy: async () => ({
+                    Component: (await import('./pages/admin/customer')).default
+                })  
+            },
+            {
                 path: 'users',
                 lazy: async () => ({
                     Component: (await import('./pages/admin/user')).default
                 })
-            }
+            },
         ]
     },
     {

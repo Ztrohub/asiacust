@@ -1,46 +1,77 @@
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
+const OFFLINE_TOAST_ID = "global-offline-toast";
+
+async function checkConnectivity(): Promise<boolean> {
+    try {
+        const baseURL = import.meta.env.VITE_BACKEND_URL || '/api'
+        const response = await fetch(`${baseURL}/health`, {
+            method: 'GET',
+            cache: 'no-store'
+        })
+        return response.ok
+    } catch {
+        return false
+    }
+}
+
 export function useNetworkStatus() {
-    const offlineToastId = useRef<string | number | null>(null);
+    const offlineToastShown = useRef(false);
 
     useEffect(() => {
-        function handleOffline() {
-            if (!offlineToastId.current) {
-                offlineToastId.current = toast.warning("Koneksi tidak stabil!", {
-                    description: "Data mungkin tidak terbaru.",
-                    duration: Infinity,
-                    action: {
-                        label: 'Tutup',
-                        onClick: () => {
-                            toast.dismiss(offlineToastId.current!)
-                            offlineToastId.current = null
-                        }
+        function showOfflineToast() {
+            if (offlineToastShown.current) return;
+            offlineToastShown.current = true;
+            toast.warning("Koneksi tidak stabil!", {
+                id: OFFLINE_TOAST_ID,
+                description: "Data mungkin tidak terbaru.",
+                duration: Infinity,
+                action: {
+                    label: 'Tutup',
+                    onClick: () => {
+                        toast.dismiss(OFFLINE_TOAST_ID);
+                        offlineToastShown.current = false;
                     }
-                })
+                }
+            });
+        }
+
+        async function handleOffline() {
+            const isReallyOnline = await checkConnectivity();
+            if (!isReallyOnline) {
+                showOfflineToast();
             }
         }
 
-        function handleOnline() {
-            if (offlineToastId.current) {
-                toast.dismiss(offlineToastId.current)
-                offlineToastId.current = null
-            }
+        async function handleOnline() {
+            const checkOnline = await checkConnectivity();
+            if (!checkOnline) return;
 
+            offlineToastShown.current = false;
+            toast.dismiss(OFFLINE_TOAST_ID);
             toast.success("Koneksi stabil", {
-                description: "Data berhasil diperbarui",
+                description: "Refresh untuk perbarui data",
                 duration: 5000
-            })
+            });
         }
 
-        window.addEventListener("offline", handleOffline)
-        window.addEventListener("online", handleOnline)
+        window.addEventListener("offline", handleOffline);
+        window.addEventListener("online", handleOnline);
 
-        if (!navigator.onLine) handleOffline()
-        
+        // Actually check real connectivity on mount
+        const timeoutId = setTimeout(async () => {
+            const isReallyOnline = await checkConnectivity();
+            if (!isReallyOnline) {
+                showOfflineToast();
+            }
+        }, 500);
+
         return () => {
-            window.removeEventListener("offline", handleOffline)
-            window.removeEventListener("online", handleOnline)
-        }
-    })
+            window.removeEventListener("offline", handleOffline);
+            window.removeEventListener("online", handleOnline);
+            clearTimeout(timeoutId);
+        };
+    }, []);
+    
 }

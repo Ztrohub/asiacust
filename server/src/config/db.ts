@@ -21,7 +21,9 @@ mongoose.connection.on('reconnected', () => {
 });
 
 export const connectDB = async () => {
-	await mongoose.connect(process.env.MONGO_URI as string);
+	await mongoose.connect(process.env.MONGO_URI as string, {
+		dbName: process.env.MONGO_DB_NAME
+	});
 	if (process.env.NODE_ENV !== 'production') {
 		mongoose.set('debug', true);
 	}

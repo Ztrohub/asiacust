@@ -1,6 +1,7 @@
 import {
   IconLayoutDashboard,
   IconUsers,
+  IconUsersGroup,
 } from '@tabler/icons-react'
 import type { JSX } from 'react'
 
@@ -20,6 +21,11 @@ export const adminlinks: SideLink[] = [
     title: 'Dashboard',
     href: '/admin',
     icon: <IconLayoutDashboard size={18} />,
+  },
+  {
+    title: 'Customers',
+    href: '/admin/customers',
+    icon: <IconUsersGroup size={18} />,
   },
   {
     title: 'Users',

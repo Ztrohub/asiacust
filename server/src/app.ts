@@ -8,6 +8,7 @@ const app = express();
 // app config
 app.use(express.json());
 app.use(cors());
+app.set('query parser', 'extended');
 
 // auto load routes
 app.use('/api', mainRoutes);

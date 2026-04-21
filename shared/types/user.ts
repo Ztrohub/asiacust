@@ -3,6 +3,7 @@ export interface IUser {
     username: string;
     firebaseUid: string;
     role: USER_ROLE;
+    status: boolean;
 }
 
 export enum USER_ROLE {

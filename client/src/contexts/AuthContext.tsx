@@ -25,7 +25,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             try {
                 if (user) {
-                    const token = await user.getIdTokenResult(true);
+                    let token;
+                    try {
+                        // Attempt to force refresh the token to get the latest custom claims (role)
+                        token = await user.getIdTokenResult(navigator.onLine);
+                    } catch (refreshError) {
+                        // If forcing refresh fails (e.g. offline), fallback to the cached token
+                        token = await user.getIdTokenResult();
+                    }
+                    
                     const userRole = token.claims.role as string | undefined;
 
                     if (!userRole || !Object.values(USER_ROLE).includes(userRole as USER_ROLE)){
@@ -40,7 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     setUser(null);
                     setRole(null);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 handleError(error)
                 setUser(null)
                 setRole(null)

@@ -10,6 +10,10 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
+      workbox: {
+        navigateFallback: '/index.html',
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+      },
       manifest: {
         name: 'Asia Customer',
         short_name: 'Asiacust',
@@ -50,5 +54,9 @@ export default defineConfig({
     fs: {
       allow: [".."]
     }
+  },
+  preview: {
+    host: true,
+    allowedHosts: '.ngrok-free.app'
   }
 })

@@ -1,6 +1,5 @@
 import { HTMLAttributes, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -51,7 +50,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       await signInWithEmailAndPassword(auth, email, data.password)
     } catch (err) {
       if (err instanceof Error) {
-        handleError(err, err.message)
+        handleError(err)
       } else {
         handleError(new Error('Error on sign in process'))
       }

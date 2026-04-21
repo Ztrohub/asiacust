@@ -19,31 +19,25 @@ export const errorsHandler = (
 	// handle zod error
 	if (err instanceof z.ZodError) {
 		return res.status(400).json({
-			error: {
-				message: 'Validasi gagal',
-				details: err.issues.map((e) => ({
-					path: e.path.join('.'),
-					message: e.message
-				}))
-			}
+			message: 'Validasi gagal',
+			details: err.issues.map((e) => ({
+				path: e.path.join('.'),
+				message: e.message
+			}))
 		});
 	}
 
 	// handle http-errors with details
 	if (err.status === 400 && err.details) {
 		return res.status(400).json({
-			error: {
-				message: err.message,
-				details: err.details
-			}
+			message: err.message,
+			details: err.details
 		});
 	}
 
 	// handle other errors
 	res.status(err.status || 500);
 	res.json({
-		error: {
-			message: err.message
-		}
+		message: err.message
 	});
 };
