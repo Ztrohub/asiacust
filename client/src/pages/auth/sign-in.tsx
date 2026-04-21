@@ -8,7 +8,7 @@ export default function SignIn() {
         <div className='relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex'>
           <div className='absolute inset-0 bg-zinc-900' />
           <div className='relative z-20 flex items-center text-lg font-medium'>
-            <svg
+            {/* <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
               fill='none'
@@ -19,7 +19,8 @@ export default function SignIn() {
               className='mr-2 h-6 w-6'
             >
               <path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' />
-            </svg>
+            </svg> */}
+            <img src="/favicon.svg" alt="icon" className="w-6 h-6 mr-2" />
             Asia Teknik Service
           </div>
 
