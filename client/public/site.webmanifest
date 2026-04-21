@@ -1,12 +1,12 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "Asia Teknik Service",
+  "short_name": "Asia Cust",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any"
     },
     {
       "src": "/web-app-manifest-512x512.png",
