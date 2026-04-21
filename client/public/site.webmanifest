@@ -17,5 +17,15 @@
   ],
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "id": "asiacust",
+  "description": "Management Service Asia Teknik",
+  "start_url": "https://asiacust.vercel.app",
+  "dir": "ltr",
+  "scope": "https://asiacust.vercel.app",
+  "lang": "id",
+  "orientation": "portrait",
+  "categories": [
+    "business"
+  ]
 }
